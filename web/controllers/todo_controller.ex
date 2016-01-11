@@ -1,4 +1,4 @@
-defmodule TodoxApi.TodoController do
+defmodule TodoxApi.V1.TodoController do
   use TodoxApi.Web, :controller
 
   alias TodoxApi.Todo
