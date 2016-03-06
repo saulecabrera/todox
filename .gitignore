@@ -13,7 +13,7 @@ erl_crash.dump
 # Alternatively, you may comment the line below and commit the
 # secrets file as long as you replace its contents by environment
 # variables.
-/config/prod.secret.exs#### joe made this: https://goel.io/joe
+/config/prod.secret.exs
 
 #####=== Elixir ===#####
 
@@ -21,6 +21,7 @@ erl_crash.dump
 /deps
 erl_crash.dump
 *.ez
+node_modules/
 
 #### joe made this: https://goel.io/joe
 

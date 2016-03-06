@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/saulecabrera/todox/issues"
   },
-  "homepage": "https://github.com/saulecabrera/todox"
+  "homepage": "https://github.com/saulecabrera/todox",
+  "devDependencies": {
+    "webpack": "^1.12.14"
+  }
 }
