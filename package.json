@@ -4,7 +4,8 @@
   "description": "\"ToDo App\"",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "packages": "priv/static/jspm_packages"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,19 @@
   },
   "homepage": "https://github.com/saulecabrera/todox",
   "devDependencies": {
-    "webpack": "^1.12.14"
+    "gulp": "^3.9.1",
+    "jspm": "^0.16.30"
+  },
+  "jspm": {
+    "directories": {
+      "packages": "priv/static/jspm_packages",
+      "test": "test"
+    },
+    "configFile": "priv/static/config.js",
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
   }
 }
