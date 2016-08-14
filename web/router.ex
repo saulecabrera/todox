@@ -19,8 +19,9 @@ defmodule Todox.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Todox do
-  #   pipe_through :api
-  # end
+  scope "/api", Todox do
+    pipe_through :api
+
+    post "/register", UserController, :create
+  end
 end
