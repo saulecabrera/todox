@@ -14,6 +14,9 @@ config :todox, Todox.Endpoint,
   pubsub: [name: Todox.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Config Repo
+config :todox, ecto_repos: [Todox.Repo]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
