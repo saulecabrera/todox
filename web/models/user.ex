@@ -16,6 +16,7 @@ defmodule Todox.User do
     struct
     |> cast(params, [:username])
     |> validate_required(:username)
+    |> validate_format(:username, ~r/\A[a-zA-Z_\d]+\z/)
     |> unique_constraint(:username)
   end
 
