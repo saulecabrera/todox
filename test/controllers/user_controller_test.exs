@@ -8,7 +8,7 @@ defmodule Todox.UserControllerTest do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
-  @valid_attrs %{password: "some content", password_hash: "some content", username: "some content"}
+  @valid_attrs %{password: "some content", username: "username"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
