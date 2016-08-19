@@ -6,7 +6,9 @@ defmodule Todox.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id,
-      username: user.username}
+    %{
+      id: user.id,
+      username: user.username
+    }
   end
 end
