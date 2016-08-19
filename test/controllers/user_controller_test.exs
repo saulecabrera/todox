@@ -12,12 +12,10 @@ defmodule Todox.UserControllerTest do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
-  test "shows a given user when selected by an id", %{conn: conn} do
-    user = Repo.insert! %User{}
-    conn = get conn, user_path(conn, :show, user)
-    assert json_response(conn, 200)["data"] == %{
-      "id" => user.id,
-      "username" => user.username
-    }
+  test "register: creates a new user", %{conn: conn} do
+    conn = post conn, register_path(conn, :create), user: @valid_attrs
+    body = json_response(conn, 201)
+    assert body["data"]["id"]
+    assert "username" == body["data"]["username"]
   end
 end
