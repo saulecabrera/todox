@@ -7,6 +7,8 @@ defmodule Todox.UserControllerTest do
   @valid_attrs %{password: "some content", username: "username"}
   @invalid_attrs %{}
 
+  @blank_errors ["can't be blank"]
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -30,5 +32,7 @@ defmodule Todox.UserControllerTest do
     conn = post conn, register_path(conn, :create), user: @invalid_attrs
     body = json_response(conn, 422)
     assert body["errors"]
+    assert body["errors"]["username"] == @blank_errors
+    assert body["errors"]["password"] == @blank_errors
   end
 end
