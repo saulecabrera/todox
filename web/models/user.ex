@@ -16,7 +16,7 @@ defmodule Todox.User do
     struct
     |> cast(params, [:username])
     |> validate_required(:username)
-    |> validate_format(:username, ~r/\A[a-zA-Z_\d]+\z/)
+    |> validate_format(:username, ~r/\A[a-zA-Z_\d]+\z/, message: "can only be composed of letters, digits and _")
     |> unique_constraint(:username)
   end
 
