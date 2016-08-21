@@ -2,14 +2,13 @@ defmodule Todox.UserControllerTest do
   alias Todox.Repo
   alias Todox.User
 
-  use Todox.ConnCase, async: true
+  use Todox.ConnCase
 
   @valid_attrs %{password: "some content", username: "username"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
   end
 
   test "register: creates a new user with valid and required attributes",
@@ -18,6 +17,13 @@ defmodule Todox.UserControllerTest do
     body = json_response(conn, 201)
     assert body["data"]["id"]
     assert "username" == body["data"]["username"]
+    refute body["data"]["password_hash"]
+    refute body["data"]["password"]
+
+    id = body["data"]["id"]
+    user = Repo.get(User, id)
+    assert user.password_hash
+    refute user.password
   end
 
   test "register: 422 HTTP error when wrong attributes provided", %{conn: conn} do
