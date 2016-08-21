@@ -26,8 +26,10 @@ defmodule Todox.ModelCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Todox.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Todox.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Todox.Repo, {:shared, self()})
     end
 
     :ok
