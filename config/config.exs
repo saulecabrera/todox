@@ -10,7 +10,7 @@ config :todox, Todox.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "//7TgLEYNDyt6Rgb7/vViTOw4/kP2c2vnspcRUqFFqJaAdwQXr6s/MAQVNOvbVPx",
-  render_errors: [accepts: ~w(html json)],
+  render_errors: [view: Todox.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Todox.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
