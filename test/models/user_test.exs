@@ -1,5 +1,5 @@
 defmodule Todox.UserTest do
-  use Todox.ModelCase, async: true
+  use Todox.ModelCase
 
   alias Todox.User
   alias Todox.Repo
