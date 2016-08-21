@@ -8,6 +8,7 @@ defmodule Todox.UserControllerTest do
   @invalid_attrs %{}
 
   @blank_errors ["can't be blank"]
+  @invalid_username %{username: "john doe!"}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -34,5 +35,12 @@ defmodule Todox.UserControllerTest do
     assert body["errors"]
     assert body["errors"]["username"] == @blank_errors
     assert body["errors"]["password"] == @blank_errors
+  end
+
+  test "register: return error on username format", %{conn: conn} do
+    conn = post conn, register_path(conn, :create), user: @invalid_username
+    body = json_response(conn, 422)
+    assert body["errors"]
+    assert body["errors"]["username"] == ["can only be composed of letters, digits and _"]
   end
 end
