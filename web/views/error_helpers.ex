@@ -26,10 +26,10 @@ defmodule Todox.ErrorHelpers do
     #
     #     dngettext "errors", "1 file", "%{count} files", count
     #
-    Gettext.dngettext(Todox.Gettext, "errors", msg, msg, opts[:count], opts)
-  end
-
-  def translate_error(msg) do
-    Gettext.dgettext(Todox.Gettext, "errors", msg)
+    if count = opts[:count] do
+      Gettext.dngettext(Todox.Gettext, "errors", msg, msg, count, opts)
+    else
+      Gettext.dgettext(Todox.Gettext, "errors", msg, opts)
+    end
   end
 end
