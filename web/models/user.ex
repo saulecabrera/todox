@@ -24,6 +24,7 @@ defmodule Todox.User do
     struct
     |> changeset(params)
     |> cast(params, [:password])
+    |> validate_required(:password)
     |> validate_length(:password, min: 8, max: 100)
     |> put_pass_hash()
   end
