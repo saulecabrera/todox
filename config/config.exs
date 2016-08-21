@@ -22,6 +22,14 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Guardian Config
+config :guardian, Guardian,
+  issuer: "Todox.#{Mix.env}",
+  ttl: {30, :days},
+  serializer: Todox.GuardianSerializer,
+  verify_issuer: true,
+  secret_key: System.get_env("TODOX_API_JWK")
+  
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
