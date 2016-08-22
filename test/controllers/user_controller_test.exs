@@ -51,4 +51,16 @@ defmodule Todox.UserControllerTest do
     assert body["errors"]
     assert body["errors"]["password"] == ["should be at least 8 character(s)"]
   end
+
+  # Test already existing resource
+
+  test "register: process user login on registration", %{conn: conn} do
+    conn = post conn, register_path(conn, :create), user: @valid_attrs
+    body = json_response(conn, 201)
+    assert body["data"]
+    assert body["data"]["jwt"]
+    assert body["data"]["exp"]
+    assert get_resp_header(conn, "authorization")
+    assert get_resp_header(conn, "x-expires")
+  end
 end
