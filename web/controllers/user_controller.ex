@@ -9,7 +9,7 @@ defmodule Todox.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
-        {conn, jwt, claims, exp} = Auth.generate_jwt(conn, user)
+        {:ok, conn, jwt, claims, exp} = Auth.generate_jwt(conn, user)
 
         conn
         |> put_status(:created)
