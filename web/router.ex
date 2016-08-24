@@ -23,5 +23,6 @@ defmodule Todox.Router do
     pipe_through :api
 
     post "/register", UserController, :create, as: :register
+    post "/login", SessionController, :create, as: :login
   end
 end
