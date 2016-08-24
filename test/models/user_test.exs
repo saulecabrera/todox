@@ -4,10 +4,6 @@ defmodule Todox.UserTest do
   alias Todox.User
   alias Todox.Repo
   
-  setup do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
-  end
-
   @valid_attrs %{password: "some content", username: "user_name"}
   @invalid_attrs %{}
 
