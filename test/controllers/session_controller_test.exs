@@ -13,7 +13,6 @@ defmodule Todox.SessionControllerTest do
   test "login: error 401 and errors are returned when bad credentials or non existing user is provided",
   %{conn: conn} do
     conn = post conn, login_path(conn, :create), credentials: @invalid_login
-    body = json_response(conn, 401)
-    assert body["errors"]
+    body = json_response(conn, 404)
   end
 end
