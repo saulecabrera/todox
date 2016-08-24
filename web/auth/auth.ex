@@ -13,15 +13,15 @@ defmodule Todox.Auth do
     {:ok, new_conn, jwt, claims, exp}
   end
 
-  def login_by_username(conn, username, given_pw) do
+  def login_by_username(username, given_pw) do
     user = Repo.get_by(User, username: username)
     cond do
       user && checkpw(given_pw, user.password_hash) ->
-        {:ok, conn, user}
+        {:ok, user}
       user ->
-        {:error, :unauthorized, conn}
+        {:error, :unauthorized}
       true ->
-        {:error, :not_found, conn}
+        {:error, :not_found}
     end
   end
 end
