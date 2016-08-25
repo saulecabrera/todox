@@ -13,6 +13,9 @@ cache:
       - _build
       - deps 
 
+before_script:
+  - psql -c 'create database todox_test;' -U postgres
+
 script:
   - mix test
 
