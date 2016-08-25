@@ -1,12 +1,21 @@
 language: elixir
+  
 elixir:
   - 1.2
+
 otp_release:
   - 18.0
+
 sudo: false
+
 cache:
   - directories:
       - _build
       - deps 
+
 script:
   - mix test
+
+services:
+  - postgresql
+
