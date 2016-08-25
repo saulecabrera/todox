@@ -9,6 +9,7 @@ defmodule Todox.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user} ->
+        # refactor this out with SessionController.create/2 ?
         {:ok, conn, jwt, claims, exp} = Auth.generate_jwt(conn, user)
 
         conn
