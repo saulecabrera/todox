@@ -22,3 +22,8 @@ script:
 services:
   - postgresql
 
+notifications:
+  email:
+    on_sucess: never
+    on_failure: always
+
