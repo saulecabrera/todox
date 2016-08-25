@@ -1,4 +1,9 @@
 defmodule Todox do
+
+  @moduledoc """
+  Todox application
+  """
+
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
