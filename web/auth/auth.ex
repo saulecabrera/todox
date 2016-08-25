@@ -1,5 +1,9 @@
 defmodule Todox.Auth do
 
+  @moduledoc """
+  A module that contains functionality for user authentication
+  """
+
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias Todox.Repo
   alias Todox.User
