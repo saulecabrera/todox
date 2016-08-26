@@ -16,7 +16,7 @@ defmodule Todox.UserController do
         |> put_status(:created)
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> put_resp_header("x-expires", to_string(exp))
-        |> render("registration.json", user: user, jwt: jwt, exp: exp)
+        |> render("auth.json", user: user, jwt: jwt, exp: exp)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

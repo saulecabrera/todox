@@ -13,7 +13,7 @@ defmodule Todox.SessionController do
         |> put_status(:ok)
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> put_resp_header("x-expires", to_string(exp))
-        |> render("registration.json", user: user, jwt: jwt, exp: exp)
+        |> render(Todox.UserView, "auth.json", user: user, jwt: jwt, exp: exp)
       {:error, :unauthorized} ->
         conn
         |> put_status(:unauthorized)
