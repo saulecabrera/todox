@@ -3,7 +3,7 @@ defmodule Todox.UserView do
   
   # render_one ?  
 
-  def render("registration.json", %{user: user, jwt: jwt, exp: exp}) do
+  def render("auth.json", %{user: user, jwt: jwt, exp: exp}) do
     %{
       data: %{
         id: user.id,
