@@ -38,5 +38,9 @@ defmodule Todox.SessionControllerTest do
     body = json_response(conn, 200)
 
     assert body["data"]
+    assert body["data"]["jwt"]
+    assert body["data"]["exp"]
+    assert get_resp_header(conn, "authorization")
+    assert get_resp_header(conn, "x-expires")
   end
 end
