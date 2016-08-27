@@ -24,5 +24,6 @@ defmodule Todox.Router do
 
     post "/register", UserController, :create, as: :register
     post "/login", SessionController, :create, as: :login
+    resources "/todos", TodoController, except: [:new, :edit]
   end
 end
