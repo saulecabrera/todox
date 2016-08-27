@@ -20,7 +20,7 @@ defmodule Todox.SessionControllerTest do
   %{conn: conn} do
     user_params = %{username: "username", password: "secretpassword"}
     changeset = User.registration_changeset(%User{}, user_params)
-    {:ok, user} = Repo.insert(changeset)
+    {:ok, _} = Repo.insert(changeset)
 
     existing_user_wrong_pw =  %{username: "username", password: "wrong_password"}
     conn = post conn, login_path(conn, :create), credentials: existing_user_wrong_pw
@@ -31,7 +31,7 @@ defmodule Todox.SessionControllerTest do
   %{conn: conn} do
     user_params = %{username: "username", password: "secretpassword"}
     changeset = User.registration_changeset(%User{}, user_params)
-    {:ok, user} = Repo.insert(changeset)
+    {:ok, _} = Repo.insert(changeset)
 
     existing_user_correct_pw = %{username: "username", password: "secretpassword"}
     conn = post conn, login_path(conn, :create), credentials: existing_user_correct_pw
