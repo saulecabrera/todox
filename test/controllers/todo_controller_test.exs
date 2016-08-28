@@ -15,10 +15,15 @@ defmodule Todox.TodoControllerTest do
   end
 
   test "POST /todos creates a todo when request contains a valid jwt", 
-  %{conn: conn, jwt: jwt} do
+  %{conn: conn, jwt: jwt, user: user} do
     conn = conn |> put_req_header("authorization", "Bearer #{jwt}")  
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs 
     
     body = json_response(conn, 201)
+    assert body["data"]
+    assert body["data"]["title"] == @valid_attrs[:title]
+    assert body["data"]["description"] == @valid_attrs[:description]
+    assert body["data"]["completed"] == @valid_attrs[:completed]
+    assert body["data"]["owner"] == user.id 
   end
 end
