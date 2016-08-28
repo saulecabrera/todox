@@ -3,7 +3,7 @@ defmodule Todox.TodoTest do
 
   alias Todox.Todo
 
-  @valid_attrs %{completed: true, description: "some content", title: "some content"}
+  @valid_attrs %{description: "Todo description", title: "Todo title"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -13,6 +13,11 @@ defmodule Todox.TodoTest do
 
   test "changeset with invalid attributes" do
     changeset = Todo.changeset(%Todo{}, @invalid_attrs)
+    refute changeset.valid?
+  end
+
+  test "changeset with empty title" do
+    changeset = Todo.changeset(%Todo{}, %{title: ""})
     refute changeset.valid?
   end
 end
