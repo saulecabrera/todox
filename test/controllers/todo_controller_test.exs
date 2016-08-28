@@ -9,6 +9,11 @@ defmodule Todox.TodoControllerTest do
 
   setup %{conn: conn} do
     {:ok, user} = Repo.insert(@user) 
+
+    # calls api_sign_in which generates a token and puts it
+    # in the connection as a request header of the form:
+    #   authorization, Bearer <jwt>
+    # Using this connection will result in automatic authentication
     {:ok, conn, jwt, claims, _} = Auth.generate_jwt(conn, user)
     conn = put_req_header(conn, "accept", "application/json")
     {:ok, conn: conn, jwt: jwt, user: user, claims: claims}
@@ -16,7 +21,6 @@ defmodule Todox.TodoControllerTest do
 
   test "POST /todos creates a todo when request contains a valid jwt", 
   %{conn: conn, jwt: jwt, user: user} do
-    conn = conn |> put_req_header("authorization", "Bearer #{jwt}")  
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs 
     
     body = json_response(conn, 201)
@@ -27,4 +31,16 @@ defmodule Todox.TodoControllerTest do
     assert body["data"]["owner"] == user.id 
   end
 
+  test "POST /todos without providing a jwt results in 401 HTTP status" do
+    conn = build_conn()
+    conn = post conn, todo_path(conn, :create), todo: @valid_attrs
+    assert conn.status == 401
+  end
+
+  test "POST /todos without a title results in errors", %{conn: conn} do
+    conn = post conn, todo_path(conn, :create), todo: %{title: " "}
+
+    body = json_response(conn, 422)
+    assert body["errors"]["title"] == ["can't be blank"]
+  end
 end
