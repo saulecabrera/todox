@@ -15,7 +15,7 @@ defmodule Todox.Todo do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :description])
+    |> cast(params, [:title, :description, :completed])
     |> validate_required([:title])
     |> validate_length(:title, min: 1)
   end
