@@ -1,7 +1,8 @@
 defmodule Todox.TodoController do
   use Todox.Web, :controller
 
-  alias Todox.Todo
+  alias Todox.{Todo, Auth}
+  plug Guardian.Plug.EnsureAuthenticated, handler: Auth
 
   def index(conn, _params) do
     todos = Repo.all(Todo)
