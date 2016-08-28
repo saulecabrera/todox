@@ -11,6 +11,15 @@ defmodule Todox.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    
+    # Looks for authorization token in header
+    # if one is not found, nothing happens
+    plug Guardian.Plug.VerifyHeader
+
+    # Serializes the resouce and makes it available in 
+    # Guardian.Plug.current_resource(conn) if available;
+    # if not available it returns nil
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Todox do
@@ -26,7 +35,6 @@ defmodule Todox.Router do
     post "/login", SessionController, :create, as: :login
 
     scope "/self" do
-      pipe_through :api
       resources "/todos", TodoController, except: [:new, :edit]
     end
   end
