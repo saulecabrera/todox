@@ -4,7 +4,7 @@ defmodule Todox.TodoControllerTest do
   alias Todox.{Repo, User, Todo, Auth}
 
   @user %User{username: "johndoe", password: "strongpassword"}
-  @valid_attrs %{completed: true, description: "some content", title: "some content"}
+  @valid_attrs %{description: "some content", title: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -23,7 +23,8 @@ defmodule Todox.TodoControllerTest do
     assert body["data"]
     assert body["data"]["title"] == @valid_attrs[:title]
     assert body["data"]["description"] == @valid_attrs[:description]
-    assert body["data"]["completed"] == @valid_attrs[:completed]
+    assert body["data"]["completed"] == false
     assert body["data"]["owner"] == user.id 
   end
+
 end
