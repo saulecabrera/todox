@@ -28,4 +28,9 @@ defmodule Todox.Auth do
         {:error, :not_found}
     end
   end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(:unauthorized)
+  end
 end
