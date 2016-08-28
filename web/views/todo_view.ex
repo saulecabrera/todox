@@ -11,7 +11,7 @@ defmodule Todox.TodoView do
 
   def render("todo.json", %{todo: todo}) do
     %{id: todo.id,
-      user_id: todo.user_id,
+      owner: todo.user_id,
       title: todo.title,
       description: todo.description,
       completed: todo.completed}
