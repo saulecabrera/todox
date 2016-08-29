@@ -14,6 +14,7 @@ defmodule Todox.TodoControllerTest do
     # in the connection as a request header of the form:
     #   authorization, Bearer <jwt>
     # Using this connection will result in automatic authentication
+
     {:ok, conn, jwt, claims, _} = Auth.generate_jwt(conn, user)
     conn = put_req_header(conn, "accept", "application/json")
     {:ok, conn: conn, jwt: jwt, user: user, claims: claims}
