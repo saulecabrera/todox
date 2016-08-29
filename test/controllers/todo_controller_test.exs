@@ -43,4 +43,16 @@ defmodule Todox.TodoControllerTest do
     body = json_response(conn, 422)
     assert body["errors"]["title"] == ["can't be blank"]
   end
+
+  test "GET /todos returns all todos that belong to the current user",
+  %{conn: conn, user: user} do
+    post conn, todo_path(conn, :create), todo: @valid_attrs
+    post conn, todo_path(conn, :create), todo: @valid_attrs
+      
+    conn = get conn, todo_path(conn, :index)
+    body = json_response(conn, 200)
+    assert length(body["data"]) == 2
+    assert hd(body["data"])["owner"] == user.id
+    assert List.last(body["data"])["owner"] == user.id
+  end
 end
