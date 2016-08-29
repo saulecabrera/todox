@@ -4,8 +4,8 @@ defmodule Todox.TodoController do
   alias Todox.{Todo, Auth}
   plug Guardian.Plug.EnsureAuthenticated, handler: Auth
 
-  def index(conn, _params) do
-    todos = Repo.all(Todo)
+  def index(conn, _params, user) do
+    todos = Repo.all(user_todos(user))
     render(conn, "index.json", todos: todos)
   end
 
@@ -64,5 +64,9 @@ defmodule Todox.TodoController do
     current_user = Guardian.Plug.current_resource(conn)
     apply(__MODULE__, action_name(conn), 
           [conn, conn.params, current_user])
+  end
+
+  defp user_todos(user) do
+    assoc(user, :todos)
   end
 end
