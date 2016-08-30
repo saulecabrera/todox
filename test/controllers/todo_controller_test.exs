@@ -58,4 +58,16 @@ defmodule Todox.TodoControllerTest do
     assert hd(body["data"])["owner"] == user.id
     assert List.last(body["data"])["owner"] == user.id
   end
+
+  test "GET /todos returns empty array if user has not created any todos",
+  %{conn: conn} do
+    conn = get conn, todo_path(conn, :index)
+    assert json_response(conn, 200)["data"] == []
+  end
+
+  test "GET /todos without providing a jwt results in 401 HTTP status" do
+    conn = build_conn()
+    conn = get conn, todo_path(conn, :index)
+    assert conn.status == 401
+  end
 end
