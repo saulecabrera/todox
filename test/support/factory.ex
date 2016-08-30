@@ -10,8 +10,7 @@ defmodule Todox.Factory do
   # User
   
   def user_factory do
-    %User{
-    } 
+    %User{} 
   end
 
   def todo_factory do
