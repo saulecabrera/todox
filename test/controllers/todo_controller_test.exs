@@ -47,9 +47,11 @@ defmodule Todox.TodoControllerTest do
 
   test "GET /todos returns all todos that belong to the current user",
   %{conn: conn, user: user} do
-    post conn, todo_path(conn, :create), todo: @valid_attrs
-    post conn, todo_path(conn, :create), todo: @valid_attrs
-      
+    other_user = insert(:user, username: "otheruser") 
+    insert(:todo, user_id: other_user.id)
+    insert(:todo, user_id: user.id)
+    insert(:todo, user_id: user.id)
+
     conn = get conn, todo_path(conn, :index)
     body = json_response(conn, 200)
     assert length(body["data"]) == 2
