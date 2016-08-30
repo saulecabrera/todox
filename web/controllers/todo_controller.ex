@@ -28,8 +28,8 @@ defmodule Todox.TodoController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    todo = Repo.get!(Todo, id)
+  def show(conn, %{"id" => id}, user) do
+    todo = Repo.get!(user_todos(user), id)
     render(conn, "show.json", todo: todo)
   end
 
