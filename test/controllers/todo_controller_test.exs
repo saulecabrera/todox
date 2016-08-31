@@ -70,4 +70,27 @@ defmodule Todox.TodoControllerTest do
     conn = get conn, todo_path(conn, :index)
     assert conn.status == 401
   end
+
+  test "UPDATE /todos/:id updates attributes of a given todo via id",
+  %{conn: conn, user: user} do
+    todo = insert(:todo, user_id: user.id) 
+    todo_params = %{completed: true, description: "New description"}
+    conn = put conn, todo_path(conn, :update, todo), todo: todo_params 
+
+    body = json_response(conn, 200)
+    assert body["data"]
+    assert body["data"]["completed"] == true
+    assert body["data"]["description"] == todo_params[:description]
+    assert body["data"]["owner"] == user.id
+  end
+
+  test "UPDATE /todos/:id results in 422 HTTP status when updating a todo from another user",
+  %{conn: conn} do
+    user = insert(:user, username: "foobar")
+    todo = insert(:todo, user_id: user.id)
+    todo_params = %{completed: true}
+     
+    conn = put conn, todo_path(conn, :update, todo), todo: todo_params 
+    assert conn.status == 404
+  end
 end
