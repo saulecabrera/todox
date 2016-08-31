@@ -115,4 +115,27 @@ defmodule Todox.TodoControllerTest do
 
     assert conn.status == 401
   end
+
+  test "GET /todos/:id shows chosen todo", %{user: user, conn: conn} do
+    todo = insert(:todo, user_id: user.id) 
+    conn = get conn, todo_path(conn, :show, todo)
+
+    todo = json_response(conn, 200)["data"]
+    assert todo["owner"] == user.id
+  end
+
+  test "GET /todos/:id when todo does not belong to current user results in 404 HTTP status",
+  %{conn: conn} do
+    user = insert(:user, username: "owner")
+    todo = insert(:todo, user_id: user.id)
+    conn = get conn, todo_path(conn, :show, todo)
+
+    assert conn.status == 404
+  end
+
+  test "GET /todos/:id with an unexisting id results in 404 HTTP status",
+  %{conn: conn} do
+    conn = get conn, todo_path(conn, :show, -1)
+    assert conn.status == 404
+  end
 end
