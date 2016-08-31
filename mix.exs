@@ -19,7 +19,7 @@ defmodule Todox.Mixfile do
   def application do
     [mod: {Todox, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :ex_machina]]
+                    :phoenix_ecto, :postgrex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
