@@ -4,9 +4,9 @@ defmodule Todox.Auth do
   A module that contains functionality for user authentication
   """
 
+  import Plug.Conn, only: [put_status: 2]
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-  alias Todox.Repo
-  alias Todox.User
+  alias Todox.{Repo, User}
 
   def generate_jwt(conn, user) do
     new_conn = Guardian.Plug.api_sign_in(conn, user)
@@ -25,7 +25,13 @@ defmodule Todox.Auth do
       user ->
         {:error, :unauthorized}
       true ->
+        dummy_checkpw
         {:error, :not_found}
     end
+  end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(:unauthorized)
   end
 end

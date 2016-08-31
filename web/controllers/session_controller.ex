@@ -1,7 +1,6 @@
 defmodule Todox.SessionController do
   use Todox.Web, :controller
 
-  alias Todox.User
   alias Todox.Auth
 
   def create(conn, %{"credentials" => %{"username" => username, "password" => pw}}) do

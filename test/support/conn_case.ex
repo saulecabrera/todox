@@ -24,6 +24,7 @@ defmodule Todox.ConnCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
+      import Todox.Factory
 
       import Todox.Router.Helpers
 
