@@ -19,4 +19,11 @@ defmodule Todox.Todo do
     |> validate_required([:title])
     |> validate_length(:title, min: 1)
   end
+
+  def update_changeset(struct, params) do
+    struct
+    |> changeset(params)
+    |> cast(params, [:completed])
+    |> validate_inclusion(:completed, [true, false])
+  end
 end
