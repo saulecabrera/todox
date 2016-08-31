@@ -1,0 +1,5 @@
+<h2> Todox API </h2>
+<p>
+  Todos API made with Elixir and Phoenix.
+  See <a href="https://github.com/saulecabrera/todox">here</a> for more information
+</p>
