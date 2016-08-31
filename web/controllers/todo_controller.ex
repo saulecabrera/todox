@@ -33,17 +33,19 @@ defmodule Todox.TodoController do
     render(conn, "show.json", todo: todo)
   end
 
-  def update(conn, %{"id" => id, "todo" => todo_params}) do
-    todo = Repo.get!(Todo, id)
-    changeset = Todo.changeset(todo, todo_params)
-
-    case Repo.update(changeset) do
-      {:ok, todo} ->
-        render(conn, "show.json", todo: todo)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Todox.ChangesetView, "error.json", changeset: changeset)
+  def update(conn, %{"id" => id, "todo" => todo_params}, user) do
+    if todo = Repo.get(user_todos(user), id) do
+      changeset = Todo.update_changeset(todo, todo_params)
+      case Repo.update(changeset) do
+        {:ok, todo} ->
+          render(conn, "show.json", todo: todo)
+        {:error, changeset} ->
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render(Todox.ChangesetView, "error.json", changeset: changeset)
+      end
+    else
+      conn |> put_status(:not_found)
     end
   end
 
@@ -63,7 +65,7 @@ defmodule Todox.TodoController do
   def action(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
     apply(__MODULE__, action_name(conn), 
-          [conn, conn.params, current_user])
+     [conn, conn.params, current_user])
   end
 
   defp user_todos(user) do
