@@ -52,14 +52,13 @@ defmodule Todox.TodoController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    todo = Repo.get!(Todo, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(todo)
-
-    send_resp(conn, :no_content, "")
+  def delete(conn, %{"id" => id}, user) do
+    if todo = Repo.get(user_todos(user), id) do
+      Repo.delete!(todo)
+      send_resp(conn, :no_content, "")
+    else
+      conn |> put_status(:not_found)
+    end
   end
 
   # Default action function (exists in every controller)
