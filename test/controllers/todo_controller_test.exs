@@ -93,4 +93,26 @@ defmodule Todox.TodoControllerTest do
     conn = put conn, todo_path(conn, :update, todo), todo: todo_params 
     assert conn.status == 404
   end
+ 
+  test "UPDATE /todos/:id brings errors back when wrong parameters are given",
+  %{conn: conn, user: user} do
+    todo = insert(:todo, user_id: user.id)
+    todo_params = %{completed: 1, title: ""}
+    conn = put conn, todo_path(conn, :update, todo), todo: todo_params
+
+    body = json_response(conn, 422)
+    assert body["errors"]
+    assert body["errors"]["title"] == ["can't be blank"]
+    assert body["errors"]["completed"] == ["is invalid"]
+  end
+
+  test "UPDATE /todos/:id without a jwt results in 401 HTTP status" do   
+    user = insert(:user, username: "foobar")
+    todo = insert(:todo, user_id: user.id)
+    
+    conn = build_conn()
+    conn = put conn, todo_path(conn, :update, todo), todo: %{}
+
+    assert conn.status == 401
+  end
 end
