@@ -21,7 +21,7 @@ defmodule Todox.TodoControllerTest do
   end
 
   test "POST /todos creates a todo when request contains a valid jwt", 
-  %{conn: conn, jwt: jwt, user: user} do
+  %{conn: conn, user: user} do
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs 
     
     body = json_response(conn, 201)
@@ -136,6 +136,30 @@ defmodule Todox.TodoControllerTest do
   test "GET /todos/:id with an unexisting id results in 404 HTTP status",
   %{conn: conn} do
     conn = get conn, todo_path(conn, :show, -1)
+    assert conn.status == 404
+  end
+  
+  test "DELETE /todos/:id sucessfully deletes a todo owned by a user", 
+  %{conn: conn, user: user} do
+    todo = insert(:todo, user_id: user.id) 
+    conn = delete conn, todo_path(conn, :delete, todo)
+    
+    assert response(conn, 204)
+    refute Repo.get(Todo, todo.id)
+  end
+
+  test "DELETE /todos/:id results in 404 HTTP status when todo does not belong to current user",
+  %{conn: conn} do
+    user = insert(:user, username: "foobar")
+    todo = insert(:todo, user_id: user.id)
+
+    conn = delete conn, todo_path(conn, :delete, todo)
+    assert conn.status == 404
+  end
+
+  test "DELETE /todos/:id results in 404 HTTP status when todo does not exist",
+  %{conn: conn} do
+    conn = delete conn, todo_path(conn, :delete, -1)
     assert conn.status == 404
   end
 end
