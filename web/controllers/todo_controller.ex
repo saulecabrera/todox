@@ -29,8 +29,11 @@ defmodule Todox.TodoController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    todo = Repo.get!(user_todos(user), id)
-    render(conn, "show.json", todo: todo)
+    if todo = Repo.get(user_todos(user), id) do
+      render(conn, "show.json", todo: todo)
+    else
+      conn |> put_status(:not_found)
+    end
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}, user) do
