@@ -1,4 +1,9 @@
 defmodule Todox.Todo do
+  @moduledoc """
+
+  Module that represents a Todo model
+
+  """
   use Todox.Web, :model
 
   schema "todos" do

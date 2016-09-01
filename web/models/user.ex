@@ -1,7 +1,9 @@
 defmodule Todox.User do
 
   @moduledoc """
+
   Module that represents a User model
+
   """
 
   use Todox.Web, :model
