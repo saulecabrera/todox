@@ -32,7 +32,7 @@ defmodule Todox.TodoController do
     if todo = Repo.get(user_todos(user), id) do
       render(conn, "show.json", todo: todo)
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 
@@ -48,7 +48,7 @@ defmodule Todox.TodoController do
           |> render(Todox.ChangesetView, "error.json", changeset: changeset)
       end
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 
@@ -57,7 +57,7 @@ defmodule Todox.TodoController do
       Repo.delete!(todo)
       send_resp(conn, :no_content, "")
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 

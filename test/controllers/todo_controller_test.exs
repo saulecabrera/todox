@@ -35,7 +35,7 @@ defmodule Todox.TodoControllerTest do
   test "POST /todos without providing a jwt results in 401 HTTP status" do
     conn = build_conn()
     conn = post conn, todo_path(conn, :create), todo: @valid_attrs
-    assert conn.status == 401
+    assert response(conn, 401) == ""
   end
 
   test "POST /todos without a title results in errors", %{conn: conn} do
@@ -68,7 +68,7 @@ defmodule Todox.TodoControllerTest do
   test "GET /todos without providing a jwt results in 401 HTTP status" do
     conn = build_conn()
     conn = get conn, todo_path(conn, :index)
-    assert conn.status == 401
+    assert response(conn, 401) == ""
   end
 
   test "UPDATE /todos/:id updates attributes of a given todo via id",
@@ -91,7 +91,7 @@ defmodule Todox.TodoControllerTest do
     todo_params = %{completed: true}
      
     conn = put conn, todo_path(conn, :update, todo), todo: todo_params 
-    assert conn.status == 404
+    assert response(conn, 404) == ""
   end
  
   test "UPDATE /todos/:id brings errors back when wrong parameters are given",
@@ -113,7 +113,7 @@ defmodule Todox.TodoControllerTest do
     conn = build_conn()
     conn = put conn, todo_path(conn, :update, todo), todo: %{}
 
-    assert conn.status == 401
+    assert response(conn, 401) == ""
   end
 
   test "GET /todos/:id shows chosen todo", %{user: user, conn: conn} do
@@ -130,13 +130,13 @@ defmodule Todox.TodoControllerTest do
     todo = insert(:todo, user_id: user.id)
     conn = get conn, todo_path(conn, :show, todo)
 
-    assert conn.status == 404
+    assert response(conn, 404) == ""
   end
 
   test "GET /todos/:id with an unexisting id results in 404 HTTP status",
   %{conn: conn} do
     conn = get conn, todo_path(conn, :show, -1)
-    assert conn.status == 404
+    assert response(conn, 404) == ""
   end
   
   test "DELETE /todos/:id sucessfully deletes a todo owned by a user", 
@@ -154,12 +154,12 @@ defmodule Todox.TodoControllerTest do
     todo = insert(:todo, user_id: user.id)
 
     conn = delete conn, todo_path(conn, :delete, todo)
-    assert conn.status == 404
+    assert response(conn, 404) == ""
   end
 
   test "DELETE /todos/:id results in 404 HTTP status when todo does not exist",
   %{conn: conn} do
     conn = delete conn, todo_path(conn, :delete, -1)
-    assert conn.status == 404
+    assert response(conn, 404) == ""
   end
 end
