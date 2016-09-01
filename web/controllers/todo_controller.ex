@@ -10,7 +10,7 @@ defmodule Todox.TodoController do
   end
 
   def create(conn, %{"todo" => todo_params}, user) do
-    changeset = 
+    changeset =
       user
       |> build_assoc(:todos)
       |> Todo.changeset(todo_params)
@@ -62,11 +62,11 @@ defmodule Todox.TodoController do
   end
 
   # Default action function (exists in every controller)
-  # It's a plug that dispatches to the proper action at 
+  # It's a plug that dispatches to the proper action at
   # the end of the controller pipeline
   def action(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
-    apply(__MODULE__, action_name(conn), 
+    apply(__MODULE__, action_name(conn),
      [conn, conn.params, current_user])
   end
 

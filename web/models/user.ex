@@ -7,7 +7,7 @@ defmodule Todox.User do
   """
 
   use Todox.Web, :model
-  
+
   schema "users" do
     field :username, :string
     field :password, :string, virtual: true
