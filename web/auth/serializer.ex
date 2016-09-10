@@ -1,5 +1,5 @@
 defmodule Todox.GuardianSerializer do
-  
+
   @moduledoc """
   Serializer module for Guardian.
   Used when loading resources via LoadResource

@@ -13,7 +13,7 @@ defmodule Todox.SessionControllerTest do
   test "login: status 401 and returned when non existing user is provided",
   %{conn: conn} do
     conn = post conn, login_path(conn, :create), credentials: @invalid_login
-    assert 404 == conn.status
+    assert response(conn, 404) == ""
   end
 
   test "login: status 401 when existing user and bad password provided", 
@@ -24,7 +24,7 @@ defmodule Todox.SessionControllerTest do
 
     existing_user_wrong_pw =  %{username: "username", password: "wrong_password"}
     conn = post conn, login_path(conn, :create), credentials: existing_user_wrong_pw
-    assert 401 == conn.status
+    assert response(conn, 401) == ""
   end
 
   test "login: status 200 and token response when valid credentials supplied", 

@@ -4,7 +4,7 @@ defmodule Todox.Auth do
   A module that contains functionality for user authentication
   """
 
-  import Plug.Conn, only: [put_status: 2]
+  import Plug.Conn, only: [send_resp: 3]
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   alias Todox.{Repo, User}
 
@@ -32,6 +32,6 @@ defmodule Todox.Auth do
 
   def unauthenticated(conn, _params) do
     conn
-    |> put_status(:unauthorized)
+    |> send_resp(:unauthorized, "")
   end
 end

@@ -10,7 +10,7 @@ defmodule Todox.TodoController do
   end
 
   def create(conn, %{"todo" => todo_params}, user) do
-    changeset = 
+    changeset =
       user
       |> build_assoc(:todos)
       |> Todo.changeset(todo_params)
@@ -32,7 +32,7 @@ defmodule Todox.TodoController do
     if todo = Repo.get(user_todos(user), id) do
       render(conn, "show.json", todo: todo)
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 
@@ -48,7 +48,7 @@ defmodule Todox.TodoController do
           |> render(Todox.ChangesetView, "error.json", changeset: changeset)
       end
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 
@@ -57,16 +57,16 @@ defmodule Todox.TodoController do
       Repo.delete!(todo)
       send_resp(conn, :no_content, "")
     else
-      conn |> put_status(:not_found)
+      conn |> send_resp(:not_found, "")
     end
   end
 
   # Default action function (exists in every controller)
-  # It's a plug that dispatches to the proper action at 
+  # It's a plug that dispatches to the proper action at
   # the end of the controller pipeline
   def action(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
-    apply(__MODULE__, action_name(conn), 
+    apply(__MODULE__, action_name(conn),
      [conn, conn.params, current_user])
   end
 

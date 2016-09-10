@@ -15,10 +15,10 @@ defmodule Todox.SessionController do
         |> render(Todox.UserView, "auth.json", user: user, jwt: jwt, exp: exp)
       {:error, :unauthorized} ->
         conn
-        |> put_status(:unauthorized)
+        |> send_resp(:unauthorized, "")
       {:error, :not_found} ->
         conn
-        |> put_status(:not_found)
+        |> send_resp(:not_found, "")
     end
   end
 end

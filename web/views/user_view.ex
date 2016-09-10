@@ -1,7 +1,7 @@
 defmodule Todox.UserView do
   use Todox.Web, :view
-  
-  # render_one ?  
+
+  # render_one ?
 
   def render("auth.json", %{user: user, jwt: jwt, exp: exp}) do
     %{
