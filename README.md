@@ -98,3 +98,7 @@ One of the following status:
 `401` wrong credentials
 
 `404` username/password combination not found
+
+### TODO
+
+- Finish the documentation
