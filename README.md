@@ -99,6 +99,6 @@ One of the following status:
 
 `404` username/password combination not found
 
-### TODO
+## TODO
 
 - Finish the documentation
